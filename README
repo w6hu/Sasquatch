@@ -6,4 +6,5 @@
 Michael:
 -- working on Printer.h + Printer.cc (finished)
 -- working on parameter configuration function + a6main (finished)
--- working on a dummy copy of the executable --> complete umain with dummy tasks
+-- working on a dummy copy of the executable --> complete umain with dummy tasks (completed)
+-- NOW you can type "make soda" to compile everything!!! WOOT!!!
