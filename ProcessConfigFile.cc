@@ -1,6 +1,3 @@
-#include <iostream>
-#include <fstream>
-#include <limits>					// numeric_limits
 #include "ProcessConfigFile.h"
 
 using namespace std;
