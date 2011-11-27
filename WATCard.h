@@ -1,7 +1,11 @@
 #ifndef WATCARD_
 #define WATCARD_
 
+#include <uC++.h>
+#include <uFuture.h>
+
 class WATCard {
+    unsigned int balance;
     WATCard( const WATCard & );			// prevent copying
     WATCard &operator=( const WATCard & );
   public:

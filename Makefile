@@ -21,4 +21,4 @@ ${OBJECTS} : ${MAKEFILE_NAME}			# OPTIONAL : changes to this file => recompile
 -include ${DEPENDS}
 
 clean :						# remove files that can be regenerated
-	rm -f *.d *.o ${EXEC} *.class ImplType
+	rm -f *.d *.o ${EXEC}
