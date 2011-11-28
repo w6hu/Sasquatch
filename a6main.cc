@@ -59,7 +59,7 @@ void uMain::main() {
         seed = time(0);                                                      // initialize seed
     } 
 
-    mprng.seed(seed);                                                        // create random number generator
+    mprng.seed((uint32_t)seed);                                                        // create random number generator
     Printer prt(configParameters.numStudents,
                 configParameters.numVendingMachines, 
                 configParameters.numCouriers);                               // create Printer Monitor
