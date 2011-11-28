@@ -11,8 +11,11 @@
 #include "VendingMachine.h"
 #include "BottlingPlant.h"
 #include "Student.h"
+#include "MPRNG.h"
 
 using namespace std;
+
+MPRNG mprng;
 
 bool convert( int &val, char *buffer ) {		                     // convert C string to integer
     std::stringstream ss( buffer );			                     // connect stream and buffer
@@ -56,6 +59,7 @@ void uMain::main() {
         seed = time(0);                                                      // initialize seed
     } 
 
+    mprng.seed(seed);                                                        // create random number generator
     Printer prt(configParameters.numStudents,
                 configParameters.numVendingMachines, 
                 configParameters.numCouriers);                               // create Printer Monitor
