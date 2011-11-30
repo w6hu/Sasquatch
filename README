@@ -8,7 +8,7 @@ Michael:
 -- working on parameter configuration function + a6main (finished)
 -- working on a dummy copy of the executable --> complete umain with dummy tasks (completed)
 -- NOW you can type "make soda" to compile everything!!! WOOT!!!
-
+-- working on BottlingPlant.cc and Truck.cc (in progress)
 
 Wan:
 -- Working on PRNG.h and MPRNG.h (finished)
