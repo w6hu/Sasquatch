@@ -13,7 +13,7 @@ Student::Student( Printer &prt, NameServer &nameServer, WATCardOffice &cardOffic
 
 void Student::main()
 {
-    int r = mprng()% MaxPurchases +1;   //select random number of bottles to buy
+/*    int r = mprng()% MaxPurchases +1;   //select random number of bottles to buy
     VendingMachine::Flavours favourite = (VendingMachine::Flavours)mprng()%4;
     WATCard* card = new WATCard();
     cardOffice.create(prt, 5, card);            //create initial WATCard
@@ -43,5 +43,8 @@ void Student::main()
             } 
         }while (status == BUY);
     }
+*/
+}
+
 
 
