@@ -1,13 +1,14 @@
 #include "WATCard.h"
 
-WATCard::WATCard( const WATCard & )			// make private to prevent copying
+WATCard::WATCard( const WATCard &card )			// make private to prevent copying
 {
-   //no implementation  
+   balance = card.balance; 
 }
 
-WATCard &WATCard::operator=( const WATCard & )		// make private to prevent copying
+WATCard &WATCard::operator=( const WATCard &card )	// make private to prevent assignment
 {
-    //no implementation
+    balance = card.balance; 
+    return *this;
 }
 
 WATCard::WATCard()

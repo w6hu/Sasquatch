@@ -12,6 +12,10 @@ Truck::Truck( Printer &prt, NameServer &nameServer, BottlingPlant &plant,
 {
     this->numVendingMachines = numVendingMachines;
     this->maxStockPerFlavour = maxStockPerFlavour;
+
+    for (unsigned int i = 0; i < NUM_FLAVOURS; i++) {
+        cargo[i] = 0;
+    }
 }
 
 unsigned int Truck::cargoSize()
@@ -27,6 +31,8 @@ unsigned int Truck::cargoSize()
 
 void Truck::main()
 {
+    prt.print(Printer::Truck, 'S');
+
     VendingMachine **machList = nameServer.getMachineList();
 
     for (;;) {
@@ -69,6 +75,8 @@ void Truck::main()
             }
         } // for
     }
+
+    prt.print(Printer::Truck, 'F');
 }
 
 
