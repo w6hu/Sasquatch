@@ -4,64 +4,63 @@
 NameServer::NameServer( Printer &prt, unsigned int numVendingMachines, unsigned int numStudents ) :
   prt(prt)
 {
-    this->numVendingMachines = numVendingMachines;
+    this->numVendingMachines = numVendingMachines;                   // assign passed in variables
     this->numStudents = numStudents;
 
-    registerOrder = 0;
-    machineList = new VendingMachine *[numVendingMachines];
-    studMachAssign = new unsigned int[numStudents];
+    registerOrder = 0;                                               // initialize registration order
+    machineList = new VendingMachine *[numVendingMachines];          // create list of vending machines
+    studMachAssign = new unsigned int[numStudents];                  // create mapping of students to vending machines
 }
 
-NameServer::~NameServer()
+NameServer::~NameServer()                                            // destructor
 {
-    delete[] machineList;
+    delete[] machineList;                                            // free allocated arrays
     delete[] studMachAssign;
 }
 
 void NameServer::VMregister( VendingMachine *vendingmachine )
 {
-    machineList[registerOrder++] = vendingmachine;
-    prt.print(Printer::NameServer, 'R', vendingmachine->getId());
+    /* we can technically move everything in this function to main() to increase concurrency;
+       however a vending machine can then start before the nameserver actually registers it... */
+    machineList[registerOrder++] = vendingmachine;                   // register vending machine
+    prt.print(Printer::NameServer, 'R', vendingmachine->getId());    // send data to printer (register vending machine)
 }
 
-VendingMachine *NameServer::getMachine( unsigned int id )
+VendingMachine *NameServer::getMachine( unsigned int id )            // called by Student: match with a vending machine
 {
-    unsigned int index = studMachAssign[id];
+    unsigned int index = studMachAssign[id];                         // index of currently matched machine
     
-    studMachAssign[id] = (studMachAssign[id] + 1) % numVendingMachines;
+    studMachAssign[id] = (studMachAssign[id] + 1) % numVendingMachines; // round robin (in preparation for next time)
 
-    prt.print(Printer::NameServer, 'N', (int)id, machineList[index]->getId()); 
+    prt.print(Printer::NameServer, 'N', 
+              (int)id, machineList[index]->getId());                 // send data to printer (new vending machine)
 
-    return machineList[index];
+    return machineList[index];                                       // return current matched machine
 }
 
-VendingMachine **NameServer::getMachineList()
+VendingMachine **NameServer::getMachineList()                        // called by Truck: get list of vending machines
 {
     return machineList;
 }
 
 void NameServer::main()
 {
-    prt.print(Printer::NameServer, 'S'); 
+    prt.print(Printer::NameServer, 'S');                             // send data to printer (name server start)
 
-    // initial assignment of student to machine
-    for (unsigned int i = 0; i < numStudents; i++) {
+    for (unsigned int i = 0; i < numStudents; i++) {                 // initial assignment of student to machine
         studMachAssign[i] = i % numVendingMachines;
     }
 
     for (;;) {
-        _Accept(~NameServer) {
+        _Accept(~NameServer) {                                       // accept destructor
             break;
-        } or _Accept(VMregister) {
-
+        } or _Accept(VMregister) {                                   // accept any mutex member to be called ... 
         } or _Accept(getMachineList) {
-
         } or _Accept(getMachine) {
-
         }
     }
 
-    prt.print(Printer::NameServer, 'F'); 
+    prt.print(Printer::NameServer, 'F');                             // send data to printer (name server finished) 
 }
 
 
