@@ -16,10 +16,10 @@ _Task VendingMachine {
     unsigned int stock[NUM_FLAVOURS];                      // array representing the inventory
     void main();
   public:
-    enum Flavours { Blues_Black_Cherry, 
-                    Classical_Cream_Soda, 
-                    Rock_Root_Beer, 
-                    Jazz_Lime }; 	                   // there are 4 flavours of soda
+    enum Flavours { Blues_Black_Cherry=0, 
+                    Classical_Cream_Soda=1, 
+                    Rock_Root_Beer=2, 
+                    Jazz_Lime=3 }; 	                   // there are 4 flavours of soda
     enum Status { BUY, STOCK, FUNDS };	                   // successful purchase, out of stock, insufficient funds
     VendingMachine( Printer &prt, NameServer &nameServer, unsigned int id, unsigned int sodaCost,
                     unsigned int maxStockPerFlavour );

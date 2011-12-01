@@ -4,7 +4,7 @@
 #include <uC++.h>
 #include "NameServer.h"
 #include "WATCardOffice.h"
-
+#include "VendingMachine.h"
 _Task Student {
     Printer &prt;
     NameServer &nameServer;
