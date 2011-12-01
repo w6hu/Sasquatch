@@ -1,0 +1,56 @@
+SODA ASSIGNMENT TEST DOCUMENTATION                                                   by Michael Liu
+=======================================================================================================================
+The soda program simualates the complex interactions between various tasks: Parent, Bank, Courier, WATCardOffice, 
+Student, VendingMachine, NameServer, Truck, and BottlingPlant.
+
+
+Check Command Line Arguments:
+=======================================================================================================================
+The configuration file and the random seed are optional arguments passed in to the executable through the command line.
+
+The executable takes the following format:
+
+./soda [ config-file [ random-seed ] ]
+
+Here is the configuration file used (soda.config):
+XXX XXX
+XXX XXX
+XXX XXX
+
+-------+---------+----------------------------------------------+------------------------------------------------------
+Test # | Line #s | Key Point of Test                            | Analysis of Test
+-------+---------+----------------------------------------------+------------------------------------------------------
+1      | 22-31   | The configuration file must exist            | 
+       |         |                                              | 
+       |         |                                              | 
+       |         |                                              | 
+       |         |                                              | 
+-------+---------+----------------------------------------------+------------------------------------------------------
+2      | 42-51   | The seed value is greater than 0             | 
+       |         |                                              | 
+       |         |                                              | 
+       |         |                                              | 
+       |         |                                              | 
+-------+---------+----------------------------------------------+------------------------------------------------------
+3      | 52-61   | There are max. 3 arguments (including the    | 
+       |         | executable name)                             | 
+       |         |                                              | 
+       |         |                                              | 
+       |         |                                              | 
+-------+---------+----------------------------------------------+------------------------------------------------------
+4      | 62-168  | If the config-file or random-seed is not     | 
+       |         | specified, the default values are used       | 
+       |         |                                              | 
+-------+---------+----------------------------------------------+------------------------------------------------------
+
+
+
+test UBER LONG timeBetweenShipments
+test 99% watcard loss rate
+
+test printer
+
+use bash script for testing:
+either generate config files OR use sed to modify config files
+
+note that this can be 750 lines long!
