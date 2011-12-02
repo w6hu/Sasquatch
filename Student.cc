@@ -39,7 +39,7 @@ void Student::main()
     for (unsigned int i = 0; i < r; i++){
         yield(mprng()%10 + 1);              //yield before buying
         VendingMachine::Status status;
-        do {
+        do {                                //keep buying until succeed
             status = myVm->buy(favourite, *card);
             switch ( status ){
                 case VendingMachine::BUY:
