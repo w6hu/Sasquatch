@@ -15,15 +15,15 @@ FWATCard WATCardOffice::create( unsigned int sid, unsigned int amount, WATCard *
     Job * job = new Job(sid, amount, card);
     jobQueue.push(job);                         //insert new job to queue
     jobEmpty.signal();                          //wake up potentially waiting requestWork
-    return card;
+    return job->result;
 }
 
 FWATCard WATCardOffice::transfer( unsigned int sid, unsigned int amount, WATCard *card )
 {
    // Job * job = new Job(sid, amount, card);
    // jobQueue.push(job);                         //!!!!insert new job to queue
-   // jobEmpty.signal();                          //wake up potential waiting requestWork
-  //  return card;
+   //  jobEmpty.signal();                          //wake up potential waiting requestWork
+  //  return job->result;
 }
 
 WATCardOffice::Job *WATCardOffice::requestWork()
@@ -43,24 +43,27 @@ void WATCardOffice::Courier::main(){
         }
         Job* job = office->requestWork();
         office->bank.withdraw(job->sid, job->amount);   //withdraw from bank
-        //job->result();                          //wait for the future watcard
-        //job->result.deposit(job->amount);       //!!!update watcard
+        WATCard *card = new WATCard();
+        card->deposit(job->amount);                          //wait for the future watcard
+              //!!!update watcard
         bool failed = (mprng()%6 ==0);       //compute failure
         if (failed){
-            _Resume Lost() ;        // !!!throw lost exception, into the future HOW??
+            job->result.exception(new WATCardOffice::Lost());     // !!!throw lost exception, into the future HOW??
+        }else{
+            job->result.delivery(card);
         }
     }
 }
 
 void WATCardOffice::main(){
     Courier *couriers[numCouriers];
-    for (int i = 0; i < numCouriers; i++){
+    for (unsigned int i = 0; i < numCouriers; i++){
         couriers[i] = new Courier(this);
     }  // create fix-sized couriers pool
 
     for (;;){
         _Accept(~WATCardOffice){        //accept descructor
-            for (int i = 0; i < numCouriers;i++){   //kill couriers
+            for (unsigned int i = 0; i < numCouriers;i++){   //kill couriers
                 delete(couriers[i]);
             }
             break;  
