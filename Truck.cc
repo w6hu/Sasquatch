@@ -4,8 +4,6 @@
 
 extern MPRNG mprng;
 
-const unsigned int Truck::NUM_FLAVOURS;                              // initialize constant
-
 Truck::Truck( Printer &prt, NameServer &nameServer, BottlingPlant &plant,
               unsigned int numVendingMachines, unsigned int maxStockPerFlavour ) :
   prt(prt), nameServer(nameServer), plant(plant)
@@ -13,7 +11,7 @@ Truck::Truck( Printer &prt, NameServer &nameServer, BottlingPlant &plant,
     this->numVendingMachines = numVendingMachines;                   // assign passed in variables
     this->maxStockPerFlavour = maxStockPerFlavour;
 
-    for (unsigned int i = 0; i < NUM_FLAVOURS; i++) {                // initialization: nothing to deliver yet
+    for (unsigned int i = 0; i < VendingMachine::NUM_FLAVOURS; i++) { // initialization: nothing to deliver yet
         cargo[i] = 0;
     }
 }
@@ -22,7 +20,7 @@ unsigned int Truck::cargoSize()                                      // helper f
 {
     unsigned int count = 0;
 
-    for (unsigned int i = 0; i < NUM_FLAVOURS; i++) {                // sum over all bottles of all flavours
+    for (unsigned int i = 0; i < VendingMachine::NUM_FLAVOURS; i++) { // sum over all bottles of all flavours
         count += cargo[i];
     }
 
@@ -49,7 +47,7 @@ void Truck::main()
 
             unsigned int *inventory = machList[vend]->inventory();   // get vending machine inventory
             unsigned int num_unreplenished = 0;                      // keep track of # needed to fill vending machine
-            for (unsigned int i = 0; i < NUM_FLAVOURS; i++) {        // loop through all flavours
+            for (unsigned int i = 0; i < VendingMachine::NUM_FLAVOURS; i++) { // loop through all flavours
                 unsigned int space = maxStockPerFlavour - inventory[i]; // calculate # needed to fill up to max stock
                 if (cargo[i] >= space) {                             // if enough cargo to fill up vending machine
                     cargo[i] -= space;                               // decrease cargo

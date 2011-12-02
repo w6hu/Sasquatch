@@ -1,7 +1,5 @@
 #include "VendingMachine.h"
 
-const unsigned int VendingMachine::NUM_FLAVOURS;                     // initialize constant
-
 VendingMachine::VendingMachine( Printer &prt, NameServer &nameServer, unsigned int id, unsigned int sodaCost,
                                 unsigned int maxStockPerFlavour ) :
   prt(prt), nameServer(nameServer)
@@ -10,7 +8,7 @@ VendingMachine::VendingMachine( Printer &prt, NameServer &nameServer, unsigned i
     this->sodaCost = sodaCost;
     this->maxStockPerFlavour = maxStockPerFlavour;
 
-    for (unsigned int i = 0; i < NUM_FLAVOURS; i++) {                // initialization: empty inventory
+    for (unsigned int i = 0; i < VendingMachine::NUM_FLAVOURS; i++) { // initialization: empty inventory
         stock[i] = 0;
     }
 }

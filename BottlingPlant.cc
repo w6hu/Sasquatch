@@ -4,8 +4,6 @@
 
 extern MPRNG mprng;
 
-const unsigned int BottlingPlant::NUM_FLAVOURS;                      // initialize constant
-
 BottlingPlant::BottlingPlant( Printer &prt, NameServer &nameServer, unsigned int numVendingMachines,
                               unsigned int maxShippedPerFlavour, unsigned int maxStockPerFlavour,
                               unsigned int timeBetweenShipments ) :
@@ -18,7 +16,7 @@ BottlingPlant::BottlingPlant( Printer &prt, NameServer &nameServer, unsigned int
 
     closingDown = false;                                             // unset flag
 
-    for (unsigned int i = 0; i < NUM_FLAVOURS; i++) {                // initialization: nothing produced yet
+    for (unsigned int i = 0; i < VendingMachine::NUM_FLAVOURS; i++) { // initialization: nothing produced yet
         produced[i] = 0;
     }
 }
@@ -29,7 +27,7 @@ void BottlingPlant::productionRun()                                  // helper f
 {
     yield(timeBetweenShipments);                                     // yield to simulate time for production
 
-    for (unsigned int i = 0; i < NUM_FLAVOURS; i++) {                // loop through each flavour
+    for (unsigned int i = 0; i < VendingMachine::NUM_FLAVOURS; i++) { // loop through each flavour
         produced[i] = mprng() % (maxShippedPerFlavour + 1);          // produce random number of bottles
     }
 }
@@ -38,7 +36,7 @@ bool BottlingPlant::getShipment( unsigned int cargo[] )              // called b
 {
     if (closingDown) return true;                                    // is plant shutting down?
 
-    for (unsigned int i = 0; i < NUM_FLAVOURS; i++) {                // otherwise, load the cargo
+    for (unsigned int i = 0; i < VendingMachine::NUM_FLAVOURS; i++) { // otherwise, load the cargo
         cargo[i] = produced[i];
     }
     return false;
@@ -48,7 +46,7 @@ unsigned int BottlingPlant::numProduced()                            // helper f
 {
     unsigned int count = 0;
 
-    for (unsigned int i = 0; i < NUM_FLAVOURS; i++) {                // sum over # bottles of all flavours produced
+    for (unsigned int i = 0; i < VendingMachine::NUM_FLAVOURS; i++) { // sum over # bottles of all flavours produced
         count += produced[i];
     }
 
