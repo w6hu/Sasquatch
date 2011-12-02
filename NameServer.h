@@ -8,6 +8,8 @@ _Task VendingMachine;                                      // fwd declaration to
 
 _Task NameServer {
     Printer &prt;                                          // reference to Printer
+    unsigned int sid;
+    unsigned int mid;
     unsigned int numVendingMachines;                       // # vending machines
     unsigned int numStudents;                              // # students
     VendingMachine **machineList;                          // list of registered vending machines

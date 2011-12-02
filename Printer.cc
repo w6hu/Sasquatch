@@ -51,11 +51,11 @@ Printer::Kind Printer::sectionedEnum(unsigned int i)
             kind = Printer::BottlingPlant;
             break;
         default:
-            if (i >= default_size && i <= default_size + numStudents)
+            if (i >= default_size && i < default_size + numStudents)
                 kind = Printer::Student;
-            else if (i >= default_size + numStudents && i <= default_size + numStudents + numVendingMachines)
+            else if (i >= default_size + numStudents && i < default_size + numStudents + numVendingMachines)
                 kind = Printer::Vending;
-            else if (i >= default_size + numStudents + numVendingMachines && i <= total_tasks)
+            else if (i >= default_size + numStudents + numVendingMachines && i < total_tasks)
                 kind = Printer::Courier;
             else
                 exit(1);
@@ -77,10 +77,10 @@ unsigned int Printer::getSectionIndex(Kind kind)
         case Printer::Student:
             break;
         case Printer::Vending:
-            index += numStudents;
+            index += (numStudents - 1);
             break;
         case Printer::Courier:
-            index += numVendingMachines;
+            index += (numVendingMachines + numStudents - 2);
             break;
         default:
             exit(1);
@@ -113,7 +113,7 @@ void Printer::print_headings()
     cout << endl;
 
     for (unsigned int i = 0; i < total_tasks; i++) {            // print the table separator
-        cout << "=======";
+        cout << "*******";
         if (i == total_tasks - 1) break;
         cout << "\t";
     }
@@ -131,8 +131,8 @@ void Printer::print_state(unsigned int index)
               case 'S':
                   break;
               case 'D':
-                  cout << " " << stored_data[index]->num1;      // print first number associated with state
-                  cout << " " << stored_data[index]->num2;      // print second number associated with state
+                  cout << ":" << stored_data[index]->num1;      // print first number associated with state
+                  cout << "," << stored_data[index]->num2;      // print second number associated with state
           }
           break;
       case Printer::WATCardOffice:
@@ -143,8 +143,8 @@ void Printer::print_state(unsigned int index)
                   break;
               case 'C':
               case 'T':
-                  cout << " " << stored_data[index]->num1;      // print first number associated with state
-                  cout << " " << stored_data[index]->num2;      // print second number associated with state
+                  cout << ":" << stored_data[index]->num1;      // print first number associated with state
+                  cout << "," << stored_data[index]->num2;      // print second number associated with state
           }
           break;
       case Printer::NameServer:
@@ -153,10 +153,10 @@ void Printer::print_state(unsigned int index)
               case 'S':
                   break;
               case 'N':
-                  cout << " " << stored_data[index]->num2;      // print first number associated with state
-                  // FALL THROUGH
+                  cout << ":" << stored_data[index]->num1<<","<<stored_data[index]->num2;      // print first number associated with state
+                  break;
               case 'R':
-                  cout << " " << stored_data[index]->num1;      // print second number associated with state
+                  cout << ":" << stored_data[index]->num1;      // print second number associated with state
           }
           break;
       case Printer::Truck:
@@ -167,10 +167,10 @@ void Printer::print_state(unsigned int index)
               case 'd':
               case 'D':
               case 'U':
-                  cout << " " << stored_data[index]->num2;      // print first number associated with state
-                  // FALL THROUGH
+                  cout << ":" << stored_data[index]->num1<<","<<stored_data[index]->num2;      // print second number associated with state
+                  break; 
               case 'P':
-                  cout << " " << stored_data[index]->num1;      // print second number associated with state
+                  cout << ":" << stored_data[index]->num1;      // print second number associated with state
           }
           break;
       case Printer::BottlingPlant:
@@ -180,7 +180,7 @@ void Printer::print_state(unsigned int index)
               case 'S':
                   break;
               case 'G':
-                  cout << " " << stored_data[index]->num1;      // print second number associated with state
+                  cout << ":" << stored_data[index]->num1;      // print second number associated with state
           }
           break;
       case Printer::Student:
@@ -189,11 +189,11 @@ void Printer::print_state(unsigned int index)
               case 'L':
                   break;
               case 'S':
-                  cout << " " << stored_data[index]->num2;      // print second number associated with state
-                  // FALL THROUGH
+                  cout << ":" << stored_data[index]->num1<<","<<stored_data[index]->num2;      // print second number associated with state
+                  break;
               case 'B':
               case 'V':
-                  cout << " " << stored_data[index]->num1;      // print first number associated with state
+                  cout << ":" << stored_data[index]->num1;      // print first number associated with state
           }
           break;
       case Printer::Vending:
@@ -203,10 +203,10 @@ void Printer::print_state(unsigned int index)
               case 'R':
                   break;
               case 'B':
-                  cout << " " << stored_data[index]->num2;      // print second number associated with state
-                  // FALL THROUGH
+              cout << ":" << stored_data[index]->num1<<","<<stored_data[index]->num2;      // print second number associated with state
+                  break;
               case 'S':
-                  cout << " " << stored_data[index]->num1;      // print first number associated with state
+                  cout << ":" << stored_data[index]->num1;      // print first number associated with state
           }
           break;
       case Printer::Courier:
@@ -216,8 +216,8 @@ void Printer::print_state(unsigned int index)
                   break;
               case 't':
               case 'T':
-                  cout << " " << stored_data[index]->num1;      // print first number associated with state
-                  cout << " " << stored_data[index]->num2;      // print second number associated with state
+                  cout << ":" << stored_data[index]->num1;      // print first number associated with state
+                  cout << "," << stored_data[index]->num2;      // print second number associated with state
           }
           break;
       default:
@@ -230,7 +230,7 @@ void Printer::flush_immediately()                               // flush all con
     unsigned int prev = 0;
 
     for (unsigned int index = 0; index < total_tasks; index++) {
-        if (!stored_data[index]->empty) {
+        if (!stored_data[index]->empty && stored_data[index]->state == 'F') {
             for (; prev < index; prev++)
                 cout << "...\t";
             print_state(index);
@@ -317,7 +317,6 @@ void Printer::print( Kind kind, unsigned int lid, char state )  // for Stud, Mac
 void Printer::print( Kind kind, unsigned int lid, char state, int value1 ) // for Stud, Mach, Cour
 {
     unsigned int id = getSectionIndex(kind) + lid;
-
     if (!stored_data[id]->empty) {                              // flush contents if about to overwrite
         flush_overwrite();
     }

@@ -31,10 +31,8 @@ VendingMachine *NameServer::getMachine( unsigned int id )            // called b
     unsigned int index = studMachAssign[id];                         // index of currently matched machine
     
     studMachAssign[id] = (studMachAssign[id] + 1) % numVendingMachines; // round robin (in preparation for next time)
-
-    prt.print(Printer::NameServer, 'N', 
-              (int)id, machineList[index]->getId());                 // send data to printer (new vending machine)
-
+    sid = id;
+    mid = machineList[index]->getId();
     return machineList[index];                                       // return current matched machine
 }
 
@@ -57,6 +55,8 @@ void NameServer::main()
         } or _Accept(VMregister) {                                   // accept any mutex member to be called ... 
         } or _Accept(getMachineList) {
         } or _Accept(getMachine) {
+            prt.print(Printer::NameServer, 'N', 
+                    (int)sid, (int)mid);                 // send data to printer (new vending machine)
         }
     }
 

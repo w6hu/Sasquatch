@@ -13,9 +13,11 @@ Student::Student( Printer &prt, NameServer &nameServer, WATCardOffice &cardOffic
 
 void Student::main()
 {
+    
     unsigned int r = mprng()% maxPurchases +1;   //select random number of bottles to buy
     int flavor = mprng() % 4;
     VendingMachine::Flavours favourite;
+    prt.print(Printer::Student, id, 'S', flavor, r);
     switch (flavor){
         case 0:
             favourite = VendingMachine::Blues_Black_Cherry;
@@ -33,32 +35,37 @@ void Student::main()
             break;
     }
     WATCard * card;
-    card = cardOffice.create(id, 5, card);            //create initial WATCard
+    FWATCard fcard = cardOffice.create(id, 5, card);            //create initial WATCard
     VendingMachine * myVm = nameServer.getMachine(id);     //get a vending machine
-
+    prt.print(Printer::Student, id, 'V', myVm->getId());
     for (unsigned int i = 0; i < r; i++){
         yield(mprng()%10 + 1);              //yield before buying
         VendingMachine::Status status;
         do {                                //keep buying until succeed
             try{
-                status = myVm->buy(favourite, *card);
+                status = myVm->buy(favourite, *fcard());
                 switch ( status ){
                     case VendingMachine::BUY:
+                        fcard();
+                        prt.print(Printer::Student, id, 'B',((WATCard*)fcard)->getBalance() );
                         break;
                     case VendingMachine::STOCK:
                         myVm = nameServer.getMachine(id);     //get a new vm when out of stock
                         break;
                     case VendingMachine::FUNDS:
                         unsigned int cost = myVm->cost();
-                        cardOffice.transfer(id, 5 + cost, card); //may have to block until finished
+                        fcard = cardOffice.transfer(id, 5 + cost, card); //may have to block until finished
                 }
             }
-            catch (...){
+            catch (WATCardOffice::Lost &e){
+                prt.print(Printer::Student, id, 'L');
                 delete(card);
-                card = cardOffice.create(id, 5, card);
+                fcard = cardOffice.create(id, 5, card);
             }
         }while (status != VendingMachine::BUY);
     }
+    delete (card);
+    prt.print(Printer::Student, id, 'F');
 }
 
 

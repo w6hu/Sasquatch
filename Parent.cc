@@ -1,6 +1,6 @@
 #include "Parent.h"
 #include "MPRNG.h"
-
+#include <iostream>
 extern MPRNG mprng;
 
 Parent::Parent( Printer &prt, Bank &bank, unsigned int numStudents, unsigned int parentalDelay ) :
@@ -25,7 +25,7 @@ void Parent::main()
             int student = mprng() % numStudents;
             int gift = mprng() % 3 + 1;
             bank.deposit(student, gift);
-
+           // std::cout<<"student"<<student<<" ,gift"<<gift<<std::endl;
             prt.print(Printer::Parent, 'D', student, gift);
         }
     }

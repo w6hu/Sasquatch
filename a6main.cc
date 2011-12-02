@@ -109,9 +109,9 @@ void uMain::main() {
 
     // DOES DELETION ORDER MATTER??? ********************************
     delete server;
-    delete WatOff;
     delete parentTask;
-
+    delete WatOff;
+    cout<<"***********************"<<endl;
     // who is deleting the Truck Tasks if bottling plant shuts down?? who deletes Courier Tasks??? ********************************
 
 } // uMain::main

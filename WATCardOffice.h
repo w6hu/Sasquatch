@@ -12,21 +12,26 @@ _Task WATCardOffice {
         unsigned int sid;
         unsigned int amount;        // call arguments (YOU DEFINE "Args")
         FWATCard result;			// return future
-        Job(unsigned int sid, unsigned int amount, FWATCard result): sid(sid), amount(amount), result(result){}  
+        WATCard* card;
+        Job(unsigned int sid, unsigned int amount, WATCard* card): sid(sid), amount(amount),card(card){}  
     };
     _Task Courier {                             // communicates with bank
         		// call arguments 
         WATCardOffice *office;
+        Printer & prt;
+        unsigned int id;
         void main();
         public:
-        Courier(WATCardOffice * office):office(office){} // default constructor 
+        Courier(WATCardOffice * office, Printer& prt, unsigned int id):office(office), prt(prt), id(id){} // default constructor 
     };
     std::queue<Job*> jobQueue;
-    uCondition jobEmpty;
     Printer &prt;
     Bank &bank;
+    unsigned int sid;
+    unsigned int amount;
     unsigned int numCouriers;
     void main();
+    uCondition noJob;
     public:
     _Event Lost {};
     WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers );
