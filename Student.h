@@ -6,6 +6,7 @@
 #include "WATCardOffice.h"
 #include "VendingMachine.h"
 _Task Student {
+    //private members
     Printer &prt;
     NameServer &nameServer;
     WATCardOffice &cardOffice;
