@@ -38,9 +38,9 @@ void Truck::main()
         yield(coffeeTime);                                           // get coffee from Tim Hortons
 
         bool status = plant.getShipment(cargo);                      // load cargo from bottling plant
-        prt.print(Printer::Truck, 'P', cargoSize());                 // send data to printer (truck loading up cargo)
 
         if (status) break;                                           // if plant is shutting down, break to terminate
+        prt.print(Printer::Truck, 'P', cargoSize());                 // send data to printer (truck loading up cargo)
         for (unsigned int vend = 0; vend < numVendingMachines; vend++) { // loop through all vending machines on list
             prt.print(Printer::Truck, 'd', 
                       machList[vend]->getId(), cargoSize());         // send data to printer (begin delivery)

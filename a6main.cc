@@ -59,7 +59,7 @@ void uMain::main() {
         seed = time(0);                                                      // initialize seed
     } 
 
-    mprng.seed((uint32_t)seed);                                                        // create random number generator
+    mprng.seed((uint32_t)seed);                                              // create random number generator
     Printer prt(configParameters.numStudents,
                 configParameters.numVendingMachines, 
                 configParameters.numCouriers);                               // create Printer Monitor
@@ -100,19 +100,17 @@ void uMain::main() {
         delete stud[id];
     }
 
-    // delete plant before vending machines to prevent deadlock??? trucks will make a final delivery??? ********************************
     delete plant;
 
-    for (unsigned int id = 0; id < configParameters.numVendingMachines; id++) {     // termination synchronization
+    for (unsigned int id = 0; id < configParameters.numVendingMachines; id++) { // termination synchronization
         delete mach[id];
     } 
 
-    // DOES DELETION ORDER MATTER??? ********************************
     delete server;
     delete parentTask;
     delete WatOff;
+
     cout<<"***********************"<<endl;
-    // who is deleting the Truck Tasks if bottling plant shuts down?? who deletes Courier Tasks??? ********************************
 
 } // uMain::main
 
