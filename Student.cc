@@ -40,17 +40,18 @@ void Student::main()
     prt.print(Printer::Student, id, 'V', myVm->getId());
     for (unsigned int i = 0; i < r; i++){
         yield(mprng()%10 + 1);              //yield before buying
-        VendingMachine::Status status;
+        VendingMachine::Status status = VendingMachine::STOCK;          //initialized 
         do {                                //keep buying until succeed
             try{
-                status = myVm->buy(favourite, *fcard());
+                fcard();
+                status = myVm->buy(favourite, *card);
                 switch ( status ){
                     case VendingMachine::BUY:
-                        fcard();
-                        prt.print(Printer::Student, id, 'B',((WATCard*)fcard)->getBalance() );
+                        prt.print(Printer::Student, id, 'B',card->getBalance() );
                         break;
                     case VendingMachine::STOCK:
                         myVm = nameServer.getMachine(id);     //get a new vm when out of stock
+                        prt.print(Printer::Student, id, 'V', myVm->getId());
                         break;
                     case VendingMachine::FUNDS:
                         unsigned int cost = myVm->cost();
@@ -59,7 +60,7 @@ void Student::main()
             }
             catch (WATCardOffice::Lost &e){
                 prt.print(Printer::Student, id, 'L');
-                delete(card);
+                delete card;
                 fcard = cardOffice.create(id, 5, card);
             }
         }while (status != VendingMachine::BUY);

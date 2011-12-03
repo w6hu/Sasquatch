@@ -47,10 +47,43 @@ Test # | Line #s | Key Point of Test                            | Analysis of Te
 
 test UBER LONG timeBetweenShipments
 test 99% watcard loss rate
+test a lot of parental delay
 
 test printer
 
 use bash script for testing:
 either generate config files OR use sed to modify config files
+
+balance in the card is lost when card is lost.
+
+plant produces random quantity of soda
+plant doesn't start until the truck comes back.
+
+truck cannot pickup cargo until plant finished production.
+truck only picks up the max amount( according to the max capacity specified as input)
+truck throws away bottles from previous shipment
+truck either fills all the vending machine, or runs out of bottles, in which it goes to restock(print U). 
+there is no guarentee that a truck will fully restock a vending maching at one delivery
+
+
+
+
+courier completes T when there is enough money in the bank or the card is lost.
+student selects a favourite soda at the beginning, and random number of purchases.
+student tries to buy again if watcard is lost.
+if student tries to transfer from the bank when there is not enough fund, should wait
+student busy waits among vending machines when his current one is out of stock
+student can only buy after courier successfully finished transfering( B XX after T XX)
+
+watcard office delegates jobs to couriers( create and transfer)
+
+parent randomly deposite 1-3 dollars to random students
+student cannot buy from vending machine while its being restocked. (no B between R and r)
+vending machine cannot restock beyond max capacity
+vending machine sells soda at a specified price
+nameserver registers vending machine ( all vending machine must be registered with the name server).
+nameserver matches student with machines in round robin order
+
+
 
 note that this can be 750 lines long!

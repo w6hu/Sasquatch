@@ -42,7 +42,7 @@ do
                                                                                 then
                                                                                 	cat manual_input.txt >> results.log
                                                                                 	echo "with random seed: $random_seed" >> results.log
-                                                                                	#exit 1
+                                                                                	exit 1
                                                                                 fi
                                                                         done
                                                                 done

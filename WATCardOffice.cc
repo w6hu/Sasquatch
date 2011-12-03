@@ -52,14 +52,14 @@ void WATCardOffice::Courier::main(){
             office->bank.withdraw(job->sid, job->amount);   //withdraw from bank
             job->card->deposit(job->amount);                          //wait for the future watcard
             //!!!update watcard
-            bool failed = (mprng()%6 ==0);       //compute failure
+            bool failed = (mprng()% 6 ==0);       //compute failure
             if (failed){
-                job->result.exception(new WATCardOffice::Lost());     // !!!throw lost exception into the future 
+                job->result.exception(new  WATCardOffice::Lost());     // !!!throw lost exception into the future 
             }else{
                 job->result.delivery(job->card);     //get the future ready
                 prt.print(Printer::Courier, id, 'T', job->sid, job->amount );
-                delete job;
             }
+            delete job;
         }
     }
     prt.print(Printer::Courier, id, 'F');
