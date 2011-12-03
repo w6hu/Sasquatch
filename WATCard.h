@@ -6,7 +6,7 @@
 
 class WATCard {
     unsigned int balance;
-    WATCard( const WATCard & );			// prevent copying
+    WATCard( const WATCard & );			                                // prevent copying
     WATCard &operator=( const WATCard & );
   public:
     WATCard();
@@ -14,6 +14,6 @@ class WATCard {
     void withdraw( unsigned int amount );
     unsigned int getBalance();
 };
-typedef Future_ISM<WATCard *> FWATCard;		// future WATCard pointer
+typedef Future_ISM<WATCard *> FWATCard;		                            // future WATCard pointer
 
 #endif
